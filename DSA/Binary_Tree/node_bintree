@@ -1,0 +1,47 @@
+//Find Height of Tree
+template <typename t>
+int binaryTree<t>::height(Node<t>* curr)
+{
+    if (curr == nullptr)
+        return 0;
+    int leftHeight = height(curr->left);
+    int rightHeight = height(curr->right);
+    return max(leftHeight, rightHeight) + 1;
+}
+
+// Find Level (Depth) of a Given Node
+template <typename t>
+int binaryTree<t>::findLevel(Node<t>* curr, t val, int level)
+{
+    if (curr == nullptr)
+        return -1;
+
+    if (curr->info == val)
+        return level;
+
+    int left = findLevel(curr->left, val, level + 1);
+    if (left != -1)
+        return left;
+
+    return findLevel(curr->right, val, level + 1);
+}
+
+// Display Parenthesized View of Tree
+template <typename t>
+void binaryTree<t>::displayParenthesizedView(Node<t>* curr)
+{
+    if (curr == nullptr)
+        return;
+
+    cout << curr->info;
+
+    // if node has any children, show them in parentheses
+    if (curr->left != nullptr || curr->right != nullptr)
+    {
+        cout << "(";
+        displayParenthesizedView(curr->left);
+        cout << ",";
+        displayParenthesizedView(curr->right);
+        cout << ")";
+    }
+}
